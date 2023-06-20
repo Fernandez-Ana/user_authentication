@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 import crypto from "crypto";
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
+dotenv.config({ path: new URL("../../.env", import.meta.url).pathname });
+
+// process.env.TOKEN_SECRET = crypto.randomBytes(64).toString("hex");
+// console.log(process.env.TOKEN_SECRET);
 
 const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true, lowercase: true },
@@ -24,6 +31,13 @@ userSchema.methods.verifyPassword = function (password) {
         .toString("hex");
 
     return this.hash === hash;
+};
+
+userSchema.methods.generateAuthToken = function () {
+    const payload = { email: this.email };
+    const secretKey = process.env.TOKEN_SECRET
+    const token = jwt.sign(payload, secretKey, { expiresIn: '1800s' });
+    return token;
 };
 
 export const User = mongoose.model("User", userSchema);
