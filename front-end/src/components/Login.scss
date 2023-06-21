@@ -1,0 +1,38 @@
+.login {
+    background-color: #C6C5B9;
+    display: inline-block;
+    padding: 5vh 0 7vh 0;
+    border-radius: 15px;
+    margin-left: 6vw;
+    margin-right: 6vw;
+
+    label {
+        font-size: 3rem;
+        font-weight: 600;
+        padding: 2vh 0;
+        color: #FDFDFF;
+        display: block;
+    }
+
+    input {
+        display: block;
+        margin: 0 auto;
+        padding: 1vh 8vw;
+        border-radius: 10px;
+    }
+
+    button {
+        margin: 3vh 0;
+        color: #FDFDFF;
+        padding: 0.5vh 2vw;
+        font-size: 3rem;
+        font-weight: 600;
+        border-radius: 10px;
+    }
+
+    a {
+        padding: 1vh 2vw;
+        margin-left: 4vw;
+        margin-right: 4vw;
+    }
+}

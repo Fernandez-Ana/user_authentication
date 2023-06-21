@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
+import './Login.scss'
 
 const Login = () => {
 
@@ -24,8 +25,8 @@ const Login = () => {
     }
 
     return (
-        <div>
-            <h3>Login</h3>
+        <div className='login'>
+            <h2>Login</h2>
             <form onSubmit={loginHandler}>
                 <label htmlFor="email">Email</label>
                 <input type="text" id="email" value={user.email} onChange={(e) => { setUser({ ...user, email: e.target.value }) }} />

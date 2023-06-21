@@ -1,0 +1,31 @@
+.navbar {
+    background-color: #C6C5B9;
+    display: inline-block;
+    padding: 5vh 17vw 7vh 17vw;
+    border-radius: 15px;
+
+    p {
+        font-size: 3rem;
+        font-weight: 600;
+        padding: 2vh 0;
+        color: #FDFDFF;
+    }
+
+    a {
+        font-size: 3rem;
+        text-decoration: none;
+        background-color: #62929E;
+        color: #FDFDFF;
+        font-weight: 600;
+        padding: 1vh 6vw;
+        border-radius: 10px;
+
+        &:hover {
+            background-color: #393D3F;
+        }
+    }
+
+    a:nth-of-type(2) {
+        padding: 1vh 8vw;
+    }
+}

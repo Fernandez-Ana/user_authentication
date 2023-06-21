@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
+import './SignUp.scss'
 
 const SignUp = () => {
 
@@ -26,8 +27,8 @@ const SignUp = () => {
 
 
     return (
-        <div>
-            <h3>Sign Up</h3>
+        <div className='signup'>
+            <h2>Sign Up</h2>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name" id="name" >Username</label>
                 <input type="text" id="name" value={data.name} onChange={(e) => { setData({ ...data, name: e.target.value }) }} />
