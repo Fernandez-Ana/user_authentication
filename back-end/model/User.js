@@ -9,6 +9,7 @@ dotenv.config({ path: new URL("../../.env", import.meta.url).pathname });
 // console.log(process.env.TOKEN_SECRET);
 
 const userSchema = new mongoose.Schema({
+    name: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true },
     salt: { type: String, required: true },
     hash: { type: String, required: true },
@@ -34,7 +35,7 @@ userSchema.methods.verifyPassword = function (password) {
 };
 
 userSchema.methods.generateAuthToken = function () {
-    const payload = { email: this.email };
+    const payload = { name: this.name, email: this.email };
     const secretKey = process.env.TOKEN_SECRET
     const token = jwt.sign(payload, secretKey, { expiresIn: '1800s' });
     return token;

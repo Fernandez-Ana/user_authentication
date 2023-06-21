@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { User } from './model/index.js';
 import cookieParser from "cookie-parser";
+import jwt from 'jsonwebtoken'
 
 
 dotenv.config({ path: new URL("../.env", import.meta.url).pathname });
@@ -16,28 +17,26 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(ReactAppDistPath.pathname));
 
+
+
 app.get("/api/status", (req, res) => {
   res.send({ status: "Ok" });
 });
 
-app.get("/*", (req, res) => {
-  res.sendFile(ReactAppIndex.pathname);
-});
-
-
 app.post("/api/signup", async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
 
   try {
     // Überprüfe, ob Benutzer mit der E-Mail bereits existiert
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return res.status(409).json({ error: "E-Mail wird bereits verwendet" })
+      return res.redirect("/login") // bei bestehender Mailadresse direkte Weiterleitung an login Komponente
+      // status(409).json({ error: "E-Mail wird bereits verwendet" })
     }
 
     // neues Benutzerobjekt erstellen
-    const newUser = new User({ email });
+    const newUser = new User({ name, email });
 
     // Passwort des Benutzers setzen
     newUser.setPassword(password);
@@ -81,7 +80,11 @@ app.post("/api/login", async (req, res) => {
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1]; // Extrahiere den Token aus dem Authorization Header
+  let token = authHeader && authHeader.split(" ")[1]; // Extrahiere den Token aus dem Authorization Header
+
+  if (!token && req?.cookies?.auth) {
+    token = req.cookies.auth;
+  }
 
   if (!token) {
     return res.sendStatus(401); // Token nicht vorhanden
@@ -98,16 +101,12 @@ const authenticateToken = (req, res, next) => {
 };
 
 
-
-// GET /secure-Route mit authenticateToken-Middleware
 app.get("/api/secure", authenticateToken, (req, res) => {
-  try {
-    // Benutzer ist valide, sende entsprechende Antwort
-    res.json({ authenticated: true });
+  res.json(req.user);
+});
 
-  } catch (error) {
-    return res.status(404).json({ error: "Benutzer nicht valide" });
-  }
+app.get("/*", (req, res) => {
+  res.sendFile(ReactAppIndex.pathname);
 });
 
 app.listen(PORT, () => {
