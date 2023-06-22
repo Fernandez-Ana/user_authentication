@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { useState } from "react"
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import './Login.scss'
 
 const Login = () => {
 
-    const navigate = useNavigate()
+    const { state: navState } = useLocation();
+    const navigate = useNavigate();
+    const [error, setError] = useState(navState?.redirectReason || "");
 
     const [user, setUser] = useState({
         email: "",
@@ -15,12 +17,20 @@ const Login = () => {
     const loginHandler = async (e) => {
         e.preventDefault()
         console.log(user)
+        setError("")
+
         await axios.post("/api/login", user)
             .then((res) => {
                 console.log(res)
                 navigate("/userprofil")
             }).catch((error) => {
-                console.error(error);
+                // console.error(error);
+                const responseError = error?.response?.data?.error?.message;
+                if (responseError) {
+                    setError(responseError);
+                } else {
+                    setError("Password / Email combination wrong. Try again");
+                }
             })
     }
 
@@ -33,7 +43,9 @@ const Login = () => {
 
                 <label htmlFor="password">Password</label>
                 <input type="password" id="password" value={user.password} onChange={(e) => { setUser({ ...user, password: e.target.value }) }} />
-
+                <div>
+                    <small>{error}</small>
+                </div>
                 <button>Submit</button>
 
             </form>

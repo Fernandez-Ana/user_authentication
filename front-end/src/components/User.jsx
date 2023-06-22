@@ -1,29 +1,19 @@
-import axios from 'axios';
-import { useEffect, useState } from "react"
-import { Link } from 'react-router-dom'
+import { useContext } from "react"
+
+import { UserContext } from '../contexts/UserContext'
 
 const User = () => {
 
-    const [user, setUser] = useState([])
-
-    // hier wird der User aus der Datenbank geholt
-    useEffect(() => {
-        axios.get("/api/secure", { withCredentials: true })
-            .then((res) => {
-                console.log(res)
-                setUser(res.data)
-            }).catch((error) => {
-                console.error(error);
-            })
-    }, [])
+    const { user, logout } = useContext(UserContext)
     console.log(user);
+
 
     return (
         <>
-            <h3>Userprofil</h3>
+            <h2>Userprofil</h2>
             {user ? <h3>Welcome {user.name}</h3> : <h3>Welcome</h3>}
             {user.email}
-            <Link to={"/"}>Logout</Link>
+            <button onClick={logout} >Logout</button>
         </>
     );
 }
