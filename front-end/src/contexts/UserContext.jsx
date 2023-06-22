@@ -24,7 +24,7 @@ export const UserProvider = ({ children }) => {
     const logout = async () => {
         await axios.get("/api/logout");
         setUser({});
-        nav("/");
+        navigate("/");
     };
 
     return (

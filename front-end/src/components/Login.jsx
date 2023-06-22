@@ -43,7 +43,7 @@ const Login = () => {
 
                 <label htmlFor="password">Password</label>
                 <input type="password" id="password" value={user.password} onChange={(e) => { setUser({ ...user, password: e.target.value }) }} />
-                <div>
+                <div className='error'>
                     <small>{error}</small>
                 </div>
                 <button>Submit</button>

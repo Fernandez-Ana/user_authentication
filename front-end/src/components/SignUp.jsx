@@ -68,7 +68,7 @@ const SignUp = () => {
                 <label htmlFor="name" id="name" >Username</label>
                 <input type="text" id="name" value={data.name} onChange={(e) => { setData({ ...data, name: e.target.value }) }} />
 
-                <div>
+                <div className='error'>
                     <small className="block text-red-600 mb-5">
                         {error.name && error.name}
                     </small>
@@ -77,7 +77,7 @@ const SignUp = () => {
                 <label htmlFor="email" id="email" >Email</label>
                 <input type="text" id="email" value={data.email} onChange={(e) => { setData({ ...data, email: e.target.value }) }} />
 
-                <div>
+                <div className='error'>
                     <small className="block text-red-600 mb-5">
                         {error.email && error.email}
                     </small>
@@ -86,7 +86,7 @@ const SignUp = () => {
                 <label htmlFor="password" id="password" >Password</label>
                 <input type="password" id="password" value={data.password} onChange={(e) => { setData({ ...data, password: e.target.value }) }} />
 
-                <div>
+                <div className='error'>
                     <small className="block text-red-600 mb-5">
                         {error.password && error.password}
                     </small>

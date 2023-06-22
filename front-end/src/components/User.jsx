@@ -1,6 +1,6 @@
 import { useContext } from "react"
-
 import { UserContext } from '../contexts/UserContext'
+import './User.scss'
 
 const User = () => {
 
@@ -9,12 +9,12 @@ const User = () => {
 
 
     return (
-        <>
+        <div className="userprofil">
             <h2>Userprofil</h2>
             {user ? <h3>Welcome {user.name}</h3> : <h3>Welcome</h3>}
-            {user.email}
+            <p>{user.email}</p>
             <button onClick={logout} >Logout</button>
-        </>
+        </div>
     );
 }
 
